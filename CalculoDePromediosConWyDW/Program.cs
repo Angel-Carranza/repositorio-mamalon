@@ -10,42 +10,54 @@ namespace CalculoDePromediosConWyDW
     {
         static void Main(string[] args)
         {
-            int repetir = 1, repetirGourp = 1;
-            int group, studenS;
-            float nota, promedio;
-            float sumaNota = 0;
-            //bool studentValid;//, notaValida;
+            int repolloDeGrupo = 1, grupo, cantidadEstudiantes, repollo = 1, continuar;
+            float sumaNota, nota, promedio;
 
-            group = PedirCanGroup();
+            Console.Title = "CULCULADOR DE PROMEDIOS";
 
-            while (repetirGourp <= group)
+            do
             {
+                Console.Clear();
+                repolloDeGrupo = 1;
+                grupo = PedirCanGrupo();
 
+                while (repolloDeGrupo <= grupo)
                 {
-                    studenS = PregutarEstudiantes(repetirGourp);
-                    repetir = 1;
+
+
+                    cantidadEstudiantes = PregutarEstudiantes(repolloDeGrupo);
+                    repollo = 1;
                     sumaNota = 0;
                     promedio = 0;
-                    while (repetir <= studenS)
+                    while (repollo <= cantidadEstudiantes)
                     {
-                        nota = PreguntarNotas(repetir);
+                        nota = PreguntarNotas(repollo);
 
                         sumaNota = sumaNota + nota;
-                        repetir++;
+                        repollo++;
                     }
 
-                    promedio = sumaNota / studenS;
+                    promedio = sumaNota / cantidadEstudiantes;
                     Console.WriteLine("\nEL PROMEDIO DEL SALON ES DE {0}", promedio);
+
+
+                    repolloDeGrupo++;
+
                 }
 
-                repetirGourp++;
-
+                continuar = Preguntar();
             }
+            while (continuar != 0);
 
-            Console.ReadKey();
+            Console.Write("\nPress any key to finish . . . ");
+            Console.ReadKey(true);
         }
 
-        static int PedirCanGroup()
+        /// <summary>
+        /// ESTE METODO SERVIRA PARA PEDIR Y VALIDAR LA CANTIDAD DE GRUPOS A REGISTRAR
+        /// </summary>
+        /// <returns></returns>
+        static int PedirCanGrupo()
         {
             int grupos;
 
@@ -61,34 +73,61 @@ namespace CalculoDePromediosConWyDW
             return grupos;
         }
 
+        /// <summary>
+        /// ESTE METODO PEDIRA Y VALIDARA LA CANTIDAD DE ALUMNOS A REGISTRAR
+        /// </summary>
+        /// <param name="grupo"></param>
+        /// <returns></returns>
         static int PregutarEstudiantes(int grupo)
         {
-            int studenS;
+            int estudiantes;
             Console.WriteLine("\nCUANTOS ALUMNOS HAY EN EL GRUPO {0}", grupo);
-            studenS = int.Parse(Console.ReadLine());
+            estudiantes = int.Parse(Console.ReadLine());
 
-            while (studenS <= 0)
+            while (estudiantes <= 0)
             {
                 Console.WriteLine("ERROR DE DATOS, INTENTE DE NUEVO");
-                studenS = int.Parse(Console.ReadLine());
+                estudiantes = int.Parse(Console.ReadLine());
             }
 
-            return studenS;
+            return estudiantes;
         }
-        static float PreguntarNotas(int repetir)
-        {
-            float nota;
-            Console.WriteLine("\nDIGITE NOTA DEL ESTUDIANTE {0}", repetir);
-            nota = float.Parse(Console.ReadLine());
 
-            while (nota < 0 || nota > 10)
+        /// <summary>
+        /// ESTE METODO PEDIRA Y VALIDARA LA NOTA DE CADA ALUMNO A REGISTRAR
+        /// </summary>
+        /// <param name="numEstudi"></param>
+        /// <returns></returns>
+        static float PreguntarNotas(int numEstudi)
+        {
+            float puntuacion;
+            Console.WriteLine("\nDIGITE NOTA DEL ESTUDIANTE {0}", numEstudi);
+            puntuacion = float.Parse(Console.ReadLine());
+
+            while (puntuacion < 0 || puntuacion > 10)
             {
                 Console.WriteLine("ERROR DE DATOS, INTENTE DE NUEVO");
-                nota = float.Parse(Console.ReadLine());
+                puntuacion = float.Parse(Console.ReadLine());
             }
 
+            return puntuacion;
+        }
 
-            return nota;
+        /// <summary>
+        /// ESTE METODO HA DE PREGUNTAR AL USUARIO SI DESEA CONTINUAR EN EL PROGRAMA
+        /// </summary>
+        /// <returns></returns>
+        static int Preguntar()
+        {
+            int repetir;
+            do
+            {
+                Console.WriteLine("\n¿DESEA INICIAR UN NUEVO PROCESO?\nPULSE 1 PARA REPETIR EL PROCESO.\nPULSE 0 PARA TERMINAR.");
+                repetir = int.Parse(Console.ReadLine());
+            }
+            while (repetir != 1 && repetir != 0);
+
+            return repetir;
         }
     }
 }
